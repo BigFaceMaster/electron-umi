@@ -1,6 +1,7 @@
 /lambda/
 /scripts
 .history
-/webpack/
+/webpack
+/electron
 .idea
 .vscode

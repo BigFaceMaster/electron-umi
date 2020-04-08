@@ -21,5 +21,7 @@ yarn-error.log
 CNAME
 /build
 /webpack
+/electron
+/release
 .idea
 .vscode

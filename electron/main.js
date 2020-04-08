@@ -1,8 +1,7 @@
-import * as path from 'path';
+import path from 'path';
 import { app, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
-// import MenuBuilder from './menu';
 
 export default class AppUpdater {
   constructor() {
@@ -51,7 +50,7 @@ const createWindow = async () => {
             nodeIntegration: true,
           }
         : {
-            preload: path.join(__dirname, 'dist/renderer.prod.js'),
+            preload: path.join(__dirname, './electron/renderer.js'),
           },
   });
 
@@ -59,7 +58,12 @@ const createWindow = async () => {
     mainWindow.loadURL('http://localhost:8000/');
     mainWindow.webContents.openDevTools();
   } else {
-    mainWindow.loadURL(`file://${__dirname}/index.html`);
+    mainWindow.loadURL({
+      pathname: path.join(__dirname, './dist/index.html'),
+      protocol: 'file:',
+      slashes: true,
+    })
+    mainWindow.webContents.openDevTools();
   }
 
   // @TODO: Use 'ready-to-show' event
@@ -80,10 +84,6 @@ const createWindow = async () => {
     mainWindow = null;
   });
 
-  // const menuBuilder = new MenuBuilder(mainWindow);
-  // menuBuilder.buildMenu();
-
-  // Remove this if your app does not use auto updates
   // eslint-disable-next-line
   new AppUpdater();
 };

@@ -1,17 +1,47 @@
 {
-  "name": "ant-design-pro",
+  "name": "electron-umi",
   "version": "1.0.0",
   "private": true,
-  "description": "An out-of-box UI solution for enterprise applications",
+  "main": "./dist/main/main.js",
+  "description": "An example base on umijs + electron + ant design pro",
+  "keywords": [
+    "Electron",
+    "umi",
+    "quick",
+    "start",
+    "tutorial",
+    "ant "
+  ],
+  "build": {
+    "productName": "electron-umi",
+    "files": [
+      "dist/",
+      "node_modules/",
+      "package.json",
+      "webpack/",
+      "electron/"
+    ],
+    "mac": {
+      "category": "your.app.category.type"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true
+    },
+    "directories": {
+      "output": "release"
+    },
+    "appId": "com.cn.littlestrong.demo",
+    "asar": false
+  },
   "scripts": {
-    "analyze": "cross-env ANALYZE=1 umi build",
-    "build": "umi build && yarn build-main-prod && electron-builder --dir",
-    "build-main-prod": "NODE_ENV=production webpack --config ./build/webpack.main.prod.config.js",
-    "deploy": "npm run site && npm run gh-pages",
     "dev": "npm run start:dev",
-    "fetch:blocks": "pro fetch-blocks --branch=umi@3 && npm run prettier",
-    "gh-pages": "cp CNAME ./dist/ && gh-pages -d dist",
-    "i18n-remove": "pro i18n-remove --locale=zh-CN --write",
     "postinstall": "umi g tmp",
     "lint": "umi g tmp && npm run lint:js && npm run lint:style && npm run lint:prettier",
     "lint-staged": "lint-staged",
@@ -21,19 +51,16 @@
     "lint:prettier": "prettier --check \"**/*\" --end-of-line auto",
     "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
     "prettier": "prettier -c --write \"**/*\"",
-    "start": "umi dev & yarn build-main-dev & yarn run-electron ",
+    "start": "umi dev & yarn build-main-dev & yarn run-electron",
     "build-main-dev": "NODE_ENV=development webpack --config ./webpack/webpack.main.config.js",
     "run-electron": "electron ./dist/main/main.js",
-    "start:dev": "cross-env REACT_APP_ENV=dev MOCK=none umi dev",
+    "start:dev": "cross-env REACT_APP_ENV=dev UMI_UI=none MOCK=none umi dev",
     "start:no-mock": "cross-env MOCK=none umi dev",
     "start:no-ui": "cross-env UMI_UI=none umi dev",
-    "start:pre": "cross-env REACT_APP_ENV=pre umi dev",
-    "start:test": "cross-env REACT_APP_ENV=test MOCK=none umi dev",
-    "pretest": "node ./tests/beforeTest",
-    "test": "umi test",
-    "test:all": "node ./tests/run-tests.js",
-    "test:component": "umi test ./src/components",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "build": "NODE_ENV=production umi build && yarn build-main-prod && electron-builder --dir",
+    "build-main-prod": "NODE_ENV=production webpack --config ./webpack/webpack.main.prod.config.js",
+    "release": "yarn build-main-dev && electron-builder"
   },
   "husky": {
     "hooks": {
@@ -58,11 +85,6 @@
     "@ant-design/pro-table": "^2.2.0",
     "antd": "^4.0.0",
     "classnames": "^2.2.6",
-    "electron": "^8.2.1",
-    "electron-debug": "^3.0.1",
-    "electron-log": "^4.0.6",
-    "electron-updater": "^4.2.0",
-    "electron-devtools-installer": "^3.0.0",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "omit.js": "^1.0.2",
@@ -82,7 +104,6 @@
     "@types/electron": "^1.6.10",
     "@types/express": "^4.17.0",
     "@types/history": "^4.7.2",
-    "@types/jest": "^25.1.0",
     "@types/lodash": "^4.14.144",
     "@types/qs": "^6.5.3",
     "@types/react": "^16.9.17",
@@ -98,6 +119,12 @@
     "cross-env": "^7.0.0",
     "cross-port-killer": "^1.1.1",
     "detect-installer": "^1.0.1",
+    "electron": "^8.2.1",
+    "electron-debug": "^3.0.1",
+    "electron-builder": "^22.3.2",
+    "electron-log": "^4.0.6",
+    "electron-updater": "^4.2.0",
+    "electron-devtools-installer": "^3.0.0",
     "enzyme": "^3.11.0",
     "eslint": "^6.8.0",
     "express": "^4.17.1",
