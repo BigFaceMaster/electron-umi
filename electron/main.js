@@ -15,32 +15,29 @@ export default class AppUpdater {
 let mainWindow = null;
 
 if (process.env.NODE_ENV === 'production') {
+  // eslint-disable-next-line
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
 }
 
-if (
-  process.env.NODE_ENV === 'development' ||
-  process.env.DEBUG_PROD === 'true'
-) {
+if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
+  // eslint-disable-next-line
   require('electron-debug')();
 }
 
 const installExtensions = async () => {
+  // eslint-disable-next-line
   const installer = require('electron-devtools-installer');
   const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
   const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
 
   return Promise.all(
-    extensions.map(name => installer.default(installer[name], forceDownload))
+    extensions.map((name) => installer.default(installer[name], forceDownload)),
   ).catch(console.log);
 };
 
 const createWindow = async () => {
-  if (
-    process.env.NODE_ENV === 'development' ||
-    process.env.DEBUG_PROD === 'true'
-  ) {
+  if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
     await installExtensions();
   }
 
@@ -51,21 +48,19 @@ const createWindow = async () => {
     webPreferences:
       process.env.NODE_ENV === 'development' || process.env.E2E_BUILD === 'true'
         ? {
-          nodeIntegration: true
-        }
+            nodeIntegration: true,
+          }
         : {
-          preload: path.join(__dirname, 'dist/renderer.prod.js')
-        }
+            preload: path.join(__dirname, 'dist/renderer.prod.js'),
+          },
   });
 
-  if(process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development') {
     mainWindow.loadURL('http://localhost:8000/');
     mainWindow.webContents.openDevTools();
   } else {
-    mainWindow.loadURL(`file://${__dirname}/index.html`)
+    mainWindow.loadURL(`file://${__dirname}/index.html`);
   }
-
-
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
