@@ -44,15 +44,12 @@ const createWindow = async () => {
     show: false,
     width: 1024,
     height: 728,
-    webPreferences:
-      process.env.NODE_ENV === 'development' || process.env.E2E_BUILD === 'true'
-        ? {
-            nodeIntegration: true,
-          }
-        : {
-            preload: path.join(__dirname, './electron/renderer.js'),
-          },
-  });
+    webPreferences: {
+      nodeIntegration: true,
+      preload: path.join(__dirname, './renderer.js')
+    }
+  })
+
 
   if (process.env.NODE_ENV === 'development') {
     mainWindow.loadURL('http://localhost:8000/');
@@ -78,6 +75,7 @@ const createWindow = async () => {
       mainWindow.show();
       mainWindow.focus();
     }
+
   });
 
   mainWindow.on('closed', () => {

@@ -7,6 +7,7 @@ module.exports = merge.smart(baseConfig, {
   target: 'electron-main',
   entry: {
     main: './electron/main.js',
+    renderer: './electron/renderer.js',
   },
   plugins: [
     new webpack.DefinePlugin({

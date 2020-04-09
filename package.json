@@ -2,7 +2,7 @@
   "name": "electron-umi",
   "version": "1.0.0",
   "private": true,
-  "main": "./dist/main/main.js",
+  "main": "./dist/main.js",
   "description": "An example base on umijs + electron + ant design pro",
   "keywords": [
     "Electron",
@@ -10,7 +10,9 @@
     "quick",
     "start",
     "tutorial",
-    "ant "
+    "ant design",
+    "ant design pro",
+    "react"
   ],
   "build": {
     "productName": "electron-umi",
@@ -41,7 +43,7 @@
     "asar": false
   },
   "scripts": {
-    "dev": "npm run start:dev",
+    "dev": "yarn start",
     "postinstall": "umi g tmp",
     "lint": "umi g tmp && npm run lint:js && npm run lint:style && npm run lint:prettier",
     "lint-staged": "lint-staged",
@@ -51,16 +53,16 @@
     "lint:prettier": "prettier --check \"**/*\" --end-of-line auto",
     "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
     "prettier": "prettier -c --write \"**/*\"",
-    "start": "umi dev & yarn build-main-dev & yarn run-electron",
+    "start": "umi dev & yarn build-main-dev && ELECTRON_ENABLE_LOGGING=1 & yarn run-electron ",
     "build-main-dev": "NODE_ENV=development webpack --config ./webpack/webpack.main.config.js",
-    "run-electron": "electron ./dist/main/main.js",
+    "run-electron": "electron ./dist/main.js",
     "start:dev": "cross-env REACT_APP_ENV=dev UMI_UI=none MOCK=none umi dev",
     "start:no-mock": "cross-env MOCK=none umi dev",
     "start:no-ui": "cross-env UMI_UI=none umi dev",
     "tsc": "tsc",
-    "build": "NODE_ENV=production umi build && yarn build-main-prod && electron-builder --dir",
+    "build": "NODE_ENV=production umi build && yarn build-main-prod",
     "build-main-prod": "NODE_ENV=production webpack --config ./webpack/webpack.main.prod.config.js",
-    "release": "yarn build-main-dev && electron-builder"
+    "release": "NODE_ENV=production umi build && yarn build-main-dev && electron-builder"
   },
   "husky": {
     "hooks": {
@@ -93,10 +95,11 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet-async": "^1.0.4",
+    "source-map-support": "^0.5.16",
     "umi": "^3.0.14",
     "umi-request": "^1.0.8",
     "use-merge-value": "^1.0.1",
-    "source-map-support": "^0.5.16"
+    "webpack-chain": "^6.4.0"
   },
   "devDependencies": {
     "@ant-design/pro-cli": "^1.0.18",

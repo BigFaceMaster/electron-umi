@@ -23,5 +23,6 @@ CNAME
 /webpack
 /electron
 /release
+/src/renderer.js
 .idea
 .vscode
