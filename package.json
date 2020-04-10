@@ -53,7 +53,7 @@
     "lint:prettier": "prettier --check \"**/*\" --end-of-line auto",
     "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less",
     "prettier": "prettier -c --write \"**/*\"",
-    "start": "umi dev & yarn build-main-dev && ELECTRON_ENABLE_LOGGING=1 & yarn run-electron ",
+    "start": "NODE_ENV=development umi dev & yarn build-main-dev && ELECTRON_ENABLE_LOGGING=1 & yarn run-electron ",
     "build-main-dev": "NODE_ENV=development webpack --config ./webpack/webpack.main.config.js",
     "run-electron": "electron ./dist/main.js",
     "start:dev": "cross-env REACT_APP_ENV=dev UMI_UI=none MOCK=none umi dev",
